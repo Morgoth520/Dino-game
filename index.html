@@ -1,56 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dino Game Demo</title>
-</head>
-<body>
-  <h1>Welcome to Cursed Reign Demo!</h1>
-  <p>This is a placeholder page while we build the full game. Stay tuned!</p>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cursed Reign Demo</title>
-    <style>
-        body {
-            background: #222;
-            color: #eee;
-            font-family: sans-serif;
-            text-align: center;
-            padding-top: 50px;
-        }
-        button {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            margin: 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Welcome to the Cursed Reign Demo!</h1>
-    <p>Choose your dinosaur:</p>
-    <button onclick="selectDino('Indominus Rex')">Play as Indominus Rex</button>
-    <button onclick="selectDino('Velociraptor')">Play as Velociraptor</button>
-    <button onclick="selectDino('Mutidon')">Play as Mutidon</button>
-    <p id="message"></p>
-
-    <script>
-        function selectDino(dino) {
-            document.getElementById('message').innerText = dino + ' selected. Loading...';
-            setTimeout(() => {
-                document.getElementById('message').innerText = dino + ' ready to play!';
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <title>Cursed Reign Demo</title>
   <style>
@@ -58,6 +8,8 @@
       margin: 0;
       background: #222;
       overflow: hidden;
+      color: #eee;
+      font-family: sans-serif;
     }
     canvas {
       display: block;
@@ -86,6 +38,7 @@
     <button onclick="startGame('Mutidon')">Mutidon</button>
   </div>
   <canvas id="game"></canvas>
+
   <script>
     const canvas = document.getElementById('game');
     const ctx = canvas.getContext('2d');
@@ -115,18 +68,19 @@
       ctx.fillStyle = '#222';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Move
+      // Movement
       if (keys['ArrowUp']) posY -= speed;
       if (keys['ArrowDown']) posY += speed;
       if (keys['ArrowLeft']) posX -= speed;
       if (keys['ArrowRight']) posX += speed;
 
-      // Draw dinosaur (simple square placeholder)
+      // Draw dino placeholder
       ctx.fillStyle = '#0f0';
       ctx.fillRect(posX, posY, 50, 50);
 
-      // Dino label
+      // Dino name
       ctx.fillStyle = '#fff';
+      ctx.font = '16px sans-serif';
       ctx.fillText(dino, posX, posY - 10);
 
       requestAnimationFrame(gameLoop);

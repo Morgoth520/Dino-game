@@ -10,3 +10,41 @@
   <p>This is a placeholder page while we build the full game. Stay tuned!</p>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursed Reign Demo</title>
+    <style>
+        body {
+            background: #222;
+            color: #eee;
+            font-family: sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Cursed Reign Demo!</h1>
+    <p>Choose your dinosaur:</p>
+    <button onclick="selectDino('Indominus Rex')">Play as Indominus Rex</button>
+    <button onclick="selectDino('Velociraptor')">Play as Velociraptor</button>
+    <button onclick="selectDino('Mutidon')">Play as Mutidon</button>
+    <p id="message"></p>
+
+    <script>
+        function selectDino(dino) {
+            document.getElementById('message').innerText = dino + ' selected. Loading...';
+            setTimeout(() => {
+                document.getElementById('message').innerText = dino + ' ready to play!';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

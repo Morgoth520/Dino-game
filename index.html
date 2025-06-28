@@ -48,3 +48,89 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cursed Reign Demo</title>
+  <style>
+    body {
+      margin: 0;
+      background: #222;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      background: #444;
+    }
+    #menu {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: #333;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    button {
+      margin: 5px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div id="menu">
+    <p>Select your dinosaur:</p>
+    <button onclick="startGame('Indominus Rex')">Indominus Rex</button>
+    <button onclick="startGame('Velociraptor')">Velociraptor</button>
+    <button onclick="startGame('Mutidon')">Mutidon</button>
+  </div>
+  <canvas id="game"></canvas>
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    let dino = null;
+    let posX = 100;
+    let posY = 100;
+    let speed = 2;
+    let keys = {};
+
+    window.addEventListener('keydown', e => keys[e.key] = true);
+    window.addEventListener('keyup', e => keys[e.key] = false);
+
+    function startGame(selectedDino) {
+      dino = selectedDino;
+      document.getElementById('menu').style.display = 'none';
+      resize();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+
+    function gameLoop() {
+      ctx.fillStyle = '#222';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Move
+      if (keys['ArrowUp']) posY -= speed;
+      if (keys['ArrowDown']) posY += speed;
+      if (keys['ArrowLeft']) posX -= speed;
+      if (keys['ArrowRight']) posX += speed;
+
+      // Draw dinosaur (simple square placeholder)
+      ctx.fillStyle = '#0f0';
+      ctx.fillRect(posX, posY, 50, 50);
+
+      // Dino label
+      ctx.fillStyle = '#fff';
+      ctx.fillText(dino, posX, posY - 10);
+
+      requestAnimationFrame(gameLoop);
+    }
+  </script>
+</body>
+</html>

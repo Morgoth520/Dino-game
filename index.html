@@ -6,27 +6,28 @@
   <style>
     body {
       margin: 0;
-      background: #222;
       overflow: hidden;
-      color: #eee;
-      font-family: sans-serif;
-    }
-    canvas {
-      display: block;
-      background: #444;
+      background: #222;
     }
     #menu {
       position: absolute;
       top: 20px;
       left: 20px;
-      z-index: 10;
       background: #333;
       padding: 10px;
       border-radius: 8px;
+      z-index: 10;
+      color: #eee;
+      font-family: sans-serif;
     }
     button {
       margin: 5px;
       font-size: 1em;
+      cursor: pointer;
+    }
+    canvas {
+      display: block;
+      background: #444;
     }
   </style>
 </head>
@@ -36,6 +37,7 @@
     <button onclick="startGame('Indominus Rex')">Indominus Rex</button>
     <button onclick="startGame('Velociraptor')">Velociraptor</button>
     <button onclick="startGame('Mutidon')">Mutidon</button>
+    <button onclick="startGame('Spinosaurus')">Spinosaurus</button>
   </div>
   <canvas id="game"></canvas>
 
@@ -68,17 +70,14 @@
       ctx.fillStyle = '#222';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Movement
       if (keys['ArrowUp']) posY -= speed;
       if (keys['ArrowDown']) posY += speed;
       if (keys['ArrowLeft']) posX -= speed;
       if (keys['ArrowRight']) posX += speed;
 
-      // Draw dino placeholder
       ctx.fillStyle = '#0f0';
       ctx.fillRect(posX, posY, 50, 50);
 
-      // Dino name
       ctx.fillStyle = '#fff';
       ctx.font = '16px sans-serif';
       ctx.fillText(dino, posX, posY - 10);

@@ -50,6 +50,13 @@
     let speed = 2;
     let keys = {};
 
+    const dinoColors = {
+      'Indominus Rex': '#0f0',
+      'Velociraptor': '#00f',
+      'Mutidon': '#ff0',
+      'Spinosaurus': '#f00'
+    };
+
     window.addEventListener('keydown', e => keys[e.key] = true);
     window.addEventListener('keyup', e => keys[e.key] = false);
 
@@ -75,7 +82,7 @@
       if (keys['ArrowLeft']) posX -= speed;
       if (keys['ArrowRight']) posX += speed;
 
-      ctx.fillStyle = '#0f0';
+      ctx.fillStyle = dinoColors[dino] || '#0f0';
       ctx.fillRect(posX, posY, 50, 50);
 
       ctx.fillStyle = '#fff';

@@ -1,96 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cursed Reign Demo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cursed Reign - Demo</title>
   <style>
     body {
       margin: 0;
-      overflow: hidden;
-      background: #222;
-      font-family: sans-serif;
-      color: #eee;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      text-align: center;
     }
-    #menu {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #333;
-      padding: 10px;
-      border-radius: 8px;
-      z-index: 10;
+    #menu, #game {
+      display: none;
     }
-    button {
-      margin: 5px;
-      font-size: 1em;
+    .button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 18px;
       cursor: pointer;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
     }
     canvas {
       display: block;
-      background: #444;
+      margin: 0 auto;
+      background-color: #222;
     }
   </style>
 </head>
 <body>
-  <div id="menu">
-    <p>Select your dinosaur:</p>
-    <button onclick="startGame('Indominus Rex')">Indominus Rex</button>
-    <button onclick="startGame('Velociraptor')">Velociraptor</button>
-    <button onclick="startGame('Mutidon')">Mutidon</button>
-    <button onclick="startGame('Spinosaurus')">Spinosaurus</button>
+  <h1>Cursed Reign - Demo</h1>
+  <div id="start">
+    <p>Select a Dinosaur:</p>
+    <button class="button" onclick="startGame('Spinosaurus')">Spinosaurus</button>
+    <button class="button" onclick="startGame('Indoraptor')">Indoraptor</button>
+    <button class="button" onclick="startGame('Mutidon')">Mutidon</button>
   </div>
-  <canvas id="game"></canvas>
+
+  <div id="game">
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
+    <p>Use WASD to move. (Demo: No combat yet)</p>
+  </div>
 
   <script>
-    const canvas = document.getElementById('game');
-    const ctx = canvas.getContext('2d');
-    let dino = null;
-    let posX = 100;
-    let posY = 100;
-    let speed = 2;
-    let keys = {};
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let player = { x: 400, y: 250, dino: "None" };
 
-    const dinoColors = {
-      'Indominus Rex': '#0f0',
-      'Velociraptor': '#00f',
-      'Mutidon': '#ff0',
-      'Spinosaurus': '#f00'
-    };
-
-    window.addEventListener('keydown', e => keys[e.key] = true);
-    window.addEventListener('keyup', e => keys[e.key] = false);
-
-    function startGame(selectedDino) {
-      dino = selectedDino;
-      document.getElementById('menu').style.display = 'none';
-      resize();
-      requestAnimationFrame(gameLoop);
+    function startGame(dino) {
+      document.getElementById("start").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      player.dino = dino;
+      draw();
     }
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 0, canvas.width, canvas.height); // background
+      ctx.fillStyle = "white";
+      ctx.font = "20px Arial";
+      ctx.fillText("You are playing as: " + player.dino, 10, 30);
+      ctx.beginPath();
+      ctx.arc(player.x, player.y, 20, 0, Math.PI * 2);
+      ctx.fillStyle = "red";
+      ctx.fill(); // player dot
     }
-    window.addEventListener('resize', resize);
 
-    function gameLoop() {
-      ctx.fillStyle = '#222';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      if (keys['ArrowUp']) posY -= speed;
-      if (keys['ArrowDown']) posY += speed;
-      if (keys['ArrowLeft']) posX -= speed;
-      if (keys['ArrowRight']) posX += speed;
-
-      ctx.fillStyle = dinoColors[dino] || '#0f0';
-      ctx.fillRect(posX, posY, 50, 50);
-
-      ctx.fillStyle = '#fff';
-      ctx.font = '16px sans-serif';
-      ctx.fillText(dino, posX, posY - 10);
-
-      requestAnimationFrame(gameLoop);
-    }
+    document.addEventListener("keydown", (e) => {
+      const speed = 10;
+      if (e.key === "w") player.y -= speed;
+      if (e.key === "s") player.y += speed;
+      if (e.key === "a") player.x -= speed;
+      if (e.key === "d") player.x += speed;
+      draw();
+    });
   </script>
 </body>
 </html>
